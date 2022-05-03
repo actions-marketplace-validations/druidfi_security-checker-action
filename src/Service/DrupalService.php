@@ -10,7 +10,12 @@ class DrupalService
     private string $drupalCoreDataUrl = 'https://updates.drupal.org/release-history/drupal/current';
     private array $coreReleases = [];
 
-    public function __construct()
+    public function getCoreReleases(): array
+    {
+        return $this->coreReleases;
+    }
+
+    public function getData(): void
     {
         $xml = new XmlEncoder();
         $drupalData = $xml->decode(file_get_contents($this->drupalCoreDataUrl), 'xml');
@@ -22,10 +27,5 @@ class DrupalService
                 $this->coreReleases[] = $drupalCoreRelease->toArray();
             }
         }
-    }
-
-    public function getCoreReleases(): array
-    {
-        return $this->coreReleases;
     }
 }

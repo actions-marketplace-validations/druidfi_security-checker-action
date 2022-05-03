@@ -13,15 +13,15 @@ class DrupalDataCommand extends Command
 
     private DrupalService $drupalService;
 
-    public function __construct()
+    protected function configure()
     {
         $this->drupalService = new DrupalService();
-
-        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->drupalService->getData();
+
         print_r($this->drupalService->getCoreReleases());
 
         // return this if there was no problem running the command

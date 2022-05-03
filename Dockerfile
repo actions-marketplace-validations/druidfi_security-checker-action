@@ -12,6 +12,5 @@ COPY --from=build /app/ /app/
 COPY checker .
 COPY src/ src/
 
-#RUN ls -lah && exit 1
-
-CMD ["/app/checker", "check"]
+ENTRYPOINT ["/app/checker"]
+CMD ["check"]
