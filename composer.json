@@ -1,0 +1,15 @@
+{
+    "name": "druidfi/security-checker-action",
+    "description": "Github Action which checks Security issues scanning package manager files",
+    "license": "MIT",
+    "require": {
+        "symfony/console": "^6.0",
+        "php": "^8.1",
+        "symfony/serializer": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
