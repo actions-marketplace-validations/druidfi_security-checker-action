@@ -5,7 +5,7 @@
 - PHP 8.1
 - Docker
 
-Get Drupal data
+Get Drupal data:
 
 ```
 ./checker drupal:data
@@ -14,11 +14,11 @@ Get Drupal data
 Create Github Action Docker image:
 
 ```
-docker build --no-cache --progress plain . -t druidfi/security-checker-action
+docker build --no-cache --progress plain . -t ghcr.io/druidfi/security-checker-action:latest
 ```
 
 Run Docker container:
 
 ```
-docker run -it --rm druidfi/security-checker-action
+docker run -it --rm ghcr.io/druidfi/security-checker-action:latest [command]
 ```
