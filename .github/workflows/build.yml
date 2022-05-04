@@ -1,7 +1,10 @@
 on:
   push:
-#  schedule:
-#    - cron:  '0 0 * * *' # UTC == 2 AM EET
+    branches:
+      - main
+    paths:
+      - '.github/workflows/build.yaml'
+      - 'src/**'
 
 name: Build Docker image
 
