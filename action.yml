@@ -12,10 +12,6 @@ inputs:
     description: 'The output format (json by default, supported: markdown, json, print_r, or yaml)'
     required: false
     default: json
-  disable-exit-code:
-    description: 'Whether to continue when issues are detected (false by default)'
-    required: false
-    default: 0
 outputs:
   vulns:
     description: 'The detected vulnerabilities as JSON'
@@ -27,4 +23,3 @@ runs:
     - ${{ inputs.format }}
     - "--lock"
     - ${{ inputs.lock }}
-    - "--disable-exit-code=${{ inputs.disable-exit-code }}"
