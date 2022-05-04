@@ -6,12 +6,12 @@ Inputs
 ------
 
 * `lock` *optional* The path to the `composer.lock` file (defaults to the repository root directory).
-* `format` *optional* The output format (defaults to `json`, supported: `markdown`, `json`, or `yaml`).
+* `format` *optional* The output format (defaults to `json`, supported: `markdown`, `json`, `print_r`, or `yaml`).
 
 Outputs
 -------
 
-* `vulns` A JSON payload containing all detected vulnerabilities
+* `updates` A JSON payload containing all detected security updates.
 
 Usage
 -----

@@ -13,8 +13,8 @@ inputs:
     required: false
     default: json
 outputs:
-  vulns:
-    description: 'The detected vulnerabilities as JSON'
+  updates:
+    description: 'The detected security updates as JSON'
 runs:
   using: 'docker'
   image: 'Dockerfile'
