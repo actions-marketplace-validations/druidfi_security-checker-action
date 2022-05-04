@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\MarkdownService;
 use App\Service\UpdateService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,6 +53,7 @@ class CheckCommand extends Command
                 'json' => (new JsonEncoder())->encode($updates, JsonEncoder::FORMAT),
                 'yaml' => (new YamlEncoder())->encode($updates, YamlEncoder::FORMAT),
                 'print_r' => print_r($updates, true),
+                'markdown' => MarkdownService::render($updates),
             };
 
             return Command::SUCCESS;

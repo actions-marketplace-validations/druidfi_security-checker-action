@@ -14,8 +14,7 @@ class UpdateService
         $installed = $this->getInstalledPackages();
 
         if (isset($installed['drupal/core'])) {
-            $drupalService = new DrupalService();
-            $installed = $drupalService->getUpdates($installed);
+            $installed = (new DrupalService())->getUpdates($installed);
         }
 
         $installed = $this->getSecurityAdvisories($installed);
