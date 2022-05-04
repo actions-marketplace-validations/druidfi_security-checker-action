@@ -23,9 +23,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - "check"
     - "--format"
     - ${{ inputs.format }}
-    - "--path"
+    - "--lock"
     - ${{ inputs.lock }}
     - "--disable-exit-code=${{ inputs.disable-exit-code }}"
