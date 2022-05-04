@@ -3,11 +3,10 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use App\Command\CheckerCommand;
+use App\Command\CheckCommand;
 use App\Command\DrupalDataCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
-$application->add(new CheckerCommand());
-$application->add(new DrupalDataCommand());
+$application->add(new CheckCommand());
 $application->run();

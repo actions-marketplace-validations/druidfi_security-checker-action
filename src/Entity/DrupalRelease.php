@@ -2,32 +2,36 @@
 
 namespace App\Entity;
 
-class DrupalCoreRelease
+class DrupalRelease
 {
+    private array $data;
     private string $version;
     private string $status;
-    private array $terms = [];
+    private array $terms;
+    private string $url;
 
     public function __construct(array $data = [])
     {
+        $this->data = $data;
         $this->version = $data['version'] ?? '';
         $this->status = $data['status'] ?? '';
         $this->terms = $data['terms'] ?? [];
+        $this->url = $data['release_link'] ?? '';
     }
 
     public function toArray(): array
     {
         return [
             'version' => $this->version,
-            'stable' => $this->isStable(),
-            'insecure' => $this->isInsecure(),
             'security_update' => $this->isSecurityUpdate(),
+            'url' => $this->url,
+            //'data' => $this->data,
         ];
     }
 
     public function isStable(): bool
     {
-        if (preg_match('/(dev|alpha|beta|rc)/', $this->version)) {
+        if (preg_match('/(dev|alpha|beta|rc|unstable)/', $this->version)) {
             return false;
         }
 
@@ -37,7 +41,7 @@ class DrupalCoreRelease
     private function isInsecure(): bool
     {
         foreach ($this->terms as $term) {
-            if ($term['value'] === 'Insecure') {
+            if (isset($term['value']) && $term['value'] === 'Insecure') {
                 return true;
             }
         }
@@ -48,7 +52,7 @@ class DrupalCoreRelease
     private function isSecurityUpdate(): bool
     {
         foreach ($this->terms as $term) {
-            if ($term['value'] === 'Security update') {
+            if (isset($term['value']) && $term['value'] === 'Security update') {
                 return true;
             }
         }

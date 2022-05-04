@@ -1,17 +1,17 @@
 name: 'The PHP Security Checker'
 description: 'Checks composer.json for known vulnerabilities in your package dependencies'
 branding:
-  icon: 'umbrella'
-  color: 'gray-dark'
+  icon: 'bell'
+  color: 'red'
 inputs:
   lock:
     description: 'The path to composer.lock is stored (root directory by default)'
     required: false
     default: './composer.lock'
   format:
-    description: 'The output format (ansi by default, supported: ansi, junit, markdown, json, or yaml)'
+    description: 'The output format (json by default, supported: markdown, json, or yaml)'
     required: false
-    default: ansi
+    default: json
   disable-exit-code:
     description: 'Whether to continue when issues are detected (false by default)'
     required: false
@@ -23,7 +23,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - "/checker"
+    - "check"
     - "--format"
     - ${{ inputs.format }}
     - "--path"
