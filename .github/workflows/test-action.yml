@@ -23,12 +23,12 @@ jobs:
         with:
           lock: tests/repo/composer.lock
           format: markdown
-        id: updates
+        id: security-updates
 
-      - uses: JasonEtco/create-an-issue@v2
+      - uses: dblock/create-a-github-issue@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONTENT: "${{ steps.updates.outputs.updates }}"
+          CONTENT: ${{ steps.security-updates.outputs.updates }}
         with:
           update_existing: true
           filename: .github/ISSUE_TEMPLATE_SEC.md
