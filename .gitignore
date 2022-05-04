@@ -1,2 +1,4 @@
 /.idea/
+/data/
+/tests/repo/vendor/
 /vendor/
