@@ -7,7 +7,6 @@ Inputs
 
 * `lock` *optional* The path to the `composer.lock` file (defaults to the repository root directory).
 * `format` *optional* The output format (defaults to `json`, supported: `markdown`, `json`, or `yaml`).
-* `disable-exit-code` *optional* Set it to `1` if you don't want the step to fail in case of detected vulnerabilities
 
 Outputs
 -------
@@ -43,18 +42,6 @@ input:
         - uses: druidfi/security-checker-action@v1
           with:
               lock: subdir/composer.lock
-
-Instead of failing, you can also get the vulnerabilities as a JSON output and
-do something with them in another step:
-
-    steps:
-        - uses: actions/checkout@v3
-        - uses: druidfi/security-checker-action@v1
-          with:
-              disable-exit-code: 1
-          id: security-check
-        - name: Display the vulnerabilities as JSON
-          run: echo ${{ steps.security-check.outputs.vulns }}
 
 ## Development
 
