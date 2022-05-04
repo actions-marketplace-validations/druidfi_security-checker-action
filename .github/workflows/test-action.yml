@@ -18,6 +18,6 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - uses: druidfi/security-checker-action@v1
+      - uses: druidfi/security-checker-action@main
         with:
           lock: tests/repo/composer.lock
