@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/test-action.yaml'
+      - '.github/workflows/test-action.yml'
       - 'src/**'
       - 'tests/**'
 
