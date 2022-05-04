@@ -7,7 +7,8 @@ build:
 	docker build --no-cache . -t $(TAG)
 
 PHONY += test
+test: FORMAT := print_r
 test: build
-	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) --format=print_r
+	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) --format=$(FORMAT)
 
 .PHONY: $(PHONY)
