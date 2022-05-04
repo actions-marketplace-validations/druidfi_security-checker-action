@@ -1,5 +1,5 @@
-name: 'The PHP Security Checker'
-description: 'Checks composer.json for known vulnerabilities in your package dependencies'
+name: 'Security Update Checker for PHP and Drupal packages'
+description: 'Checks composer.json for known available security updates in your package dependencies'
 branding:
   icon: 'bell'
   color: 'red'
