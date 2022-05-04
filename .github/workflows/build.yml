@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/build.yaml'
       - 'src/**'
+      - 'app.Dockerfile'
 
 name: Build Docker image
 
@@ -29,4 +30,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          dockerfile: app.Dockerfile
           tags: ghcr.io/druidfi/security-checker-action:latest
