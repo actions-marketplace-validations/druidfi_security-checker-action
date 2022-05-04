@@ -1,7 +1,7 @@
 FROM composer AS build
 
 WORKDIR /app
-COPY composer.* .
+COPY composer.* /app/
 RUN composer install --no-interaction --no-dev --optimize-autoloader --no-progress
 
 FROM php:8.1
