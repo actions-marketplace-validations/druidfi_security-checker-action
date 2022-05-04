@@ -9,7 +9,7 @@ inputs:
     required: false
     default: './composer.lock'
   format:
-    description: 'The output format (json by default, supported: markdown, json, or yaml)'
+    description: 'The output format (json by default, supported: markdown, json, print_r, or yaml)'
     required: false
     default: json
   disable-exit-code:

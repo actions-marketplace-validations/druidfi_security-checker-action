@@ -7,7 +7,9 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class UpdateService
 {
-    public function checkUpdates(): void
+    private string $lock_file;
+
+    public function checkUpdates(): array
     {
         $installed = $this->getInstalledPackages();
 
@@ -24,13 +26,12 @@ class UpdateService
             }
         }
 
-        print_r($installed);
-        //echo (new JsonEncoder())->encode($installed, JsonEncoder::FORMAT);
+        return $installed;
     }
 
     private function getInstalledPackages(): array
     {
-        $data = (new JsonEncoder())->decode(file_get_contents('composer.lock'), 'json');
+        $data = (new JsonEncoder())->decode(file_get_contents($this->lock_file), 'json');
         $installed = [];
 
         foreach ($data['packages'] as $package) {
@@ -81,5 +82,12 @@ class UpdateService
         }
 
         return $updates;
+    }
+
+    public function setLockFile(string $lock_file): static
+    {
+        $this->lock_file = $lock_file;
+
+        return $this;
     }
 }
