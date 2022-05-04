@@ -22,3 +22,12 @@ jobs:
       - uses: druidfi/security-checker-action@main
         with:
           lock: tests/repo/composer.lock
+        id: updates
+
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONTENT: ${{ steps.updates.outputs.updates }}
+        with:
+          update_existing: true
+          filename: .github/ISSUE_TEMPLATE_SEC.md
