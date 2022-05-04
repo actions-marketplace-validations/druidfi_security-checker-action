@@ -1,32 +1,67 @@
 # security-checker-action
 
-## Inputs
+This action checks your `composer.lock` for known vulnerabilities in your package dependencies.
 
-## `who-to-greet`
+Inputs
+------
 
-**Required** The name of the person to greet. Default `"World"`.
+* `lock` *optional* The path to the `composer.lock` file (defaults to the repository root directory).
+* `format` *optional* The output format (defaults to `json`, supported: `markdown`, `json`, or `yaml`).
+* `disable-exit-code` *optional* Set it to `1` if you don't want the step to fail in case of detected vulnerabilities
 
-## Outputs
+Outputs
+-------
 
-## `time`
+* `vulns` A JSON payload containing all detected vulnerabilities
 
-The time we greeted you.
+Usage
+-----
 
-## Example usage
+If you want the step to fail whenever there is a security issue in one of your
+dependencies, use this action:
 
-uses: druidfi/hello-world-docker-action@v1
-with:
-  who-to-greet: 'Mona the Octocat'
+    steps:
+        - uses: actions/checkout@v3
+        - uses: druidfi/security-checker-action@v1
 
-## Requirements for development
+To speed up security checks, you can cache the vulnerability database:
 
-- PHP 8.1
-- Docker
+    steps:
+        - uses: actions/checkout@v3
+        - uses: actions/cache@v2
+          id: cache-db
+          with:
+              path: ~/.symfony/cache
+              key: db
+        - uses: druidfi/security-checker-action@v1
 
-Get Drupal data:
+If the `composer.lock` is not in the repository root directory, pass is as an
+input:
+
+    steps:
+        - uses: actions/checkout@v3
+        - uses: druidfi/security-checker-action@v1
+          with:
+              lock: subdir/composer.lock
+
+Instead of failing, you can also get the vulnerabilities as a JSON output and
+do something with them in another step:
+
+    steps:
+        - uses: actions/checkout@v3
+        - uses: druidfi/security-checker-action@v1
+          with:
+              disable-exit-code: 1
+          id: security-check
+        - name: Display the vulnerabilities as JSON
+          run: echo ${{ steps.security-check.outputs.vulns }}
+
+## Development
+
+Build and test example `composer.lock` in `tests/repo`:
 
 ```
-./checker drupal:data
+make test
 ```
 
 Create Github Action Docker image:
@@ -35,14 +70,8 @@ Create Github Action Docker image:
 docker build --no-cache --progress plain . -t ghcr.io/druidfi/security-checker-action:latest
 ```
 
-Run Docker container:
-
-```
-docker run -it --rm -w /workspace -e GITHUB_WORKSPACE=/workspace -v $(pwd)/tests/repo:/workspace ghcr.io/druidfi/security-checker-action:latest [command]
-```
-
 Run in some Drupal repo folder:
 
 ```
-docker run -it --rm -w /workspace -e GITHUB_WORKSPACE=/workspace -v $(pwd):/workspace ghcr.io/druidfi/security-checker-action:latest check
+docker run -it --rm -w /workspace -e GITHUB_WORKSPACE=/workspace -v $(pwd):/workspace ghcr.io/druidfi/security-checker-action:latest
 ```
