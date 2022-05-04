@@ -15,5 +15,5 @@ ARG lpsc_path=/usr/local/bin/lpsc
 ADD ${lpsc_repo}/releases/download/v2.0.3/local-php-security-checker_2.0.3_linux_amd64 ${lpsc_path}
 RUN chmod 755 ${lpsc_path}
 
-ENTRYPOINT ["/app/checker"]
-CMD ["check"]
+ENTRYPOINT ["/app/checker", "check"]
+CMD [""]

@@ -1,10 +1,13 @@
 PHONY :=
 PROJECT_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+TAG := ghcr.io/druidfi/security-checker-action:latest
+
+PHONY += build
+build:
+	docker build --no-cache . -t $(TAG)
 
 PHONY += test
-test: TAG := ghcr.io/druidfi/security-checker-action:latest
-test:
-	docker build --no-cache . -t $(TAG)
-	docker run -it --rm -w /workspace -e GITHUB_WORKSPACE=/workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) check --format=print_r
+test: build
+	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) --format=print_r
 
 .PHONY: $(PHONY)

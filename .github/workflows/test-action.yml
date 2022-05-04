@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/test-action.yaml'
+      - 'src/**'
+
+name: Test Action
+
+jobs:
+
+  test-action:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - uses: druidfi/security-checker-action@v1
+        with:
+          lock: tests/repo/composer.lock

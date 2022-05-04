@@ -73,5 +73,5 @@ docker build --no-cache --progress plain . -t ghcr.io/druidfi/security-checker-a
 Run in some Drupal repo folder:
 
 ```
-docker run -it --rm -w /workspace -e GITHUB_WORKSPACE=/workspace -v $(pwd):/workspace ghcr.io/druidfi/security-checker-action:latest
+docker run -it --rm -w /workspace -v $(pwd):/workspace ghcr.io/druidfi/security-checker-action:latest
 ```
