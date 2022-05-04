@@ -2,9 +2,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.github/workflows/test-action.yaml'
-      - 'src/**'
+    #paths:
+    #  - '.github/workflows/test-action.yaml'
+    #  - 'src/**'
 
 name: Test Action
 
