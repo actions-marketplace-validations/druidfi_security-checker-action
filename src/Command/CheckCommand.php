@@ -49,12 +49,14 @@ class CheckCommand extends Command
         try {
             $updates = $updateService->checkUpdates();
 
-            echo match ($input->getOption('format')) {
+            $content = match ($input->getOption('format')) {
                 'json' => (new JsonEncoder())->encode($updates, JsonEncoder::FORMAT),
                 'yaml' => (new YamlEncoder())->encode($updates, YamlEncoder::FORMAT),
                 'print_r' => print_r($updates, true),
                 'markdown' => MarkdownService::render($updates),
             };
+
+            $output->write($content);
 
             return Command::SUCCESS;
         } catch (\Exception $e) {
