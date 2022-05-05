@@ -11,8 +11,13 @@ build-gha-image: build-docker-image
 	docker build --no-cache . -t $(TAG)
 
 PHONY += test
-test: FORMAT := print_r
-test: build-docker-image
+test: FORMAT := markdown
+test:
+	./checker --lock=./tests/repo/composer.lock --format=$(FORMAT)
+
+PHONY += test-docker
+test-docker: FORMAT := print_r
+test-docker: build-docker-image
 	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) /checker --format=$(FORMAT)
 
 PHONY += test-gha
