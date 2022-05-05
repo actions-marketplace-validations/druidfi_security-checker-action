@@ -1,7 +1,9 @@
 ---
 title: Pending security updates!
-labels: security
-assignees: back-2-95
+assignees:
+  - back-2-95
+labels:
+  - security
 ---
 ${{ steps.security-updates.outputs.updates }}
 
