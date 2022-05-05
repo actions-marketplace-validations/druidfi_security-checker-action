@@ -43,7 +43,7 @@ class UpdateService
     private function getSecurityAdvisories(array $installed): array
     {
         // lpsc is the command added to Docker image to run the security check
-        $json = shell_exec('lpsc --format json');
+        $json = shell_exec(sprintf('lpsc -path %s --format json', $this->lock_file));
         $json = str_replace('::set-output name=vulns::', '', $json);
         $data = (new JsonEncoder())->decode($json, 'json');
 
