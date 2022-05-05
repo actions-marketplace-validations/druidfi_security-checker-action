@@ -25,7 +25,7 @@ class MarkdownService
 
         if ($hasDrupal) {
             $markdown .= "\nAs Drupal core has security updates that might indicate that updating Drupal core will";
-            $markdown .= "solve some of these updates.";
+            $markdown .= " solve some of these updates. You should start the updates from Drupal core.";
         }
 
         return $markdown;
