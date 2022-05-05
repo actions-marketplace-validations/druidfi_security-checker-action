@@ -5,6 +5,6 @@ assignees:
 labels:
   - security
 ---
-"{{ env.BODY }}"
+{{ env.BODY }}
 
 This issue was brought to you by {{ payload.sender.login }}.
