@@ -1,5 +1,5 @@
 ---
-title: Pending security updates!
+title: Pending security updates in production!
 assignees:
   - {{ payload.sender.login }}
 labels:
