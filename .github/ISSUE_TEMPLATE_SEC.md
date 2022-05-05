@@ -9,4 +9,4 @@ labels:
 
 These updates are pending and were found with scanning `composer.lock` and checking for available security updates.
 
-Branch: {{ ref }}
+Branch: `{{ ref }}`

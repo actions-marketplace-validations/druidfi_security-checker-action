@@ -5,7 +5,6 @@ on:
     paths:
       - '.github/workflows/test-action.yml'
       - '.github/ISSUE_TEMPLATE_SEC.md'
-      - 'src/**'
       - 'tests/**'
 
 name: Test Action
