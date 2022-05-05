@@ -45,20 +45,27 @@ input:
 
 ## Development
 
-Build and test example `composer.lock` in `tests/repo`:
+Test code with example `composer.lock` in `tests/repo`:
 
 ```
 make test
 ```
 
-Create Github Action Docker image:
+Test Docker image with example `composer.lock` in `tests/repo`:
 
 ```
-docker build --no-cache --progress plain . -t ghcr.io/druidfi/security-checker-action:latest
+make test-docker
 ```
 
-Run in some Drupal repo folder:
+Test Github Action image with example `composer.lock` in `tests/repo`:
 
 ```
-docker run -it --rm -w /workspace -v $(pwd):/workspace ghcr.io/druidfi/security-checker-action:latest
+make test-docker
+```
+
+Example: Check some Drupal repository:
+
+```
+docker pull ghcr.io/druidfi/security-checker-action
+docker run -it --rm -w /workspace -v $(pwd):/workspace ghcr.io/druidfi/security-checker-action /checker --format=markdown
 ```
