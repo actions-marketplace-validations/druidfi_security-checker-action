@@ -1,7 +1,7 @@
 ---
 title: Pending security updates in production!
 assignees:
-  - {{ payload.sender.login }}
+  - "{{ payload.sender.login }}"
 labels:
   - security
 ---
