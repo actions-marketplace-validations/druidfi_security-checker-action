@@ -5,6 +5,6 @@ assignees:
 labels:
   - security
 ---
-${{ steps.security-updates.outputs.updates }}
+{{ env.BODY }}
 
 This issue was brought to you by {{ payload.sender.login }}.

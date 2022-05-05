@@ -29,7 +29,7 @@ jobs:
       - uses: dblock/create-a-github-issue@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONTENT: ${{ steps.security-updates.outputs.updates }}
+          BODY: ${{ steps.security-updates.outputs.updates }}
         with:
           update_existing: true
           filename: .github/ISSUE_TEMPLATE_SEC.md
