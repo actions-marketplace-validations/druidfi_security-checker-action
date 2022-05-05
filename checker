@@ -4,11 +4,10 @@
 require __DIR__.'/vendor/autoload.php';
 
 use App\Command\CheckCommand;
-use App\Command\DrupalDataCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
+$app = new Application();
 $check = new CheckCommand();
-$application->add($check);
-$application->setDefaultCommand($check->getName(), true);
-$application->run();
+$app->add($check);
+$app->setDefaultCommand($check->getName(), true);
+$app->run();

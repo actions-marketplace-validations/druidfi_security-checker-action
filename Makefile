@@ -5,6 +5,7 @@ TAG := ghcr.io/druidfi/security-checker-action:latest
 PHONY += build
 build:
 	docker build -f app.Dockerfile --no-cache . -t $(TAG)
+	docker build --no-cache . -t $(TAG)
 
 PHONY += test
 test: FORMAT := print_r
