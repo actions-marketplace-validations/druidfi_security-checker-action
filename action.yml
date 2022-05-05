@@ -19,6 +19,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - "/checker"
     - "--format"
     - ${{ inputs.format }}
     - "--lock"

@@ -9,6 +9,6 @@ build:
 PHONY += test
 test: FORMAT := print_r
 test: build
-	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) --format=$(FORMAT)
+	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) /checker --format=$(FORMAT)
 
 .PHONY: $(PHONY)

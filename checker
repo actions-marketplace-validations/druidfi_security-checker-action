@@ -8,5 +8,7 @@ use App\Command\DrupalDataCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
-$application->add(new CheckCommand());
+$check = new CheckCommand();
+$application->add($check);
+$application->setDefaultCommand($check->getName(), true);
 $application->run();
