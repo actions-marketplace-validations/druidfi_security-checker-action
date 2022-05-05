@@ -27,7 +27,7 @@ class DrupalService
                         // Only the latest security update is marked as such in data from drupal.org
                         if ($release['security_update']) {
                             //$installed[$package_name]['updates'][] = $release;
-                            $installed[$package_name]['update_to'] = $release['version'];
+                            $installed[$package_name]['update_to'] = Version::patch($release['version']);
                             $installed[$package_name]['read_more'] = $release['url'];
                 }
                     }

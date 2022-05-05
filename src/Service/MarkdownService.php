@@ -9,12 +9,12 @@ class MarkdownService
         $markdown = "## Security updates available\n\n";
 
         foreach ($updates as $package_name => $data) {
-            #$markdown .= sprintf("\n\n## %s", $package_name);
             $markdown .= sprintf(
-                "- `%s` from %s to %s\n",
+                "- `%s` from %s to [%s](%s)\n",
                 $package_name,
                 $data['current_version'],
-                $data['update_to']
+                $data['update_to'],
+                $data['read_more']
             );
         }
 

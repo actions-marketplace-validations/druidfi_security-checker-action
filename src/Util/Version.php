@@ -35,4 +35,10 @@ class Version
         $parts = explode('.', self::normalize($version));
         return sprintf('%d.%d', $parts[0], $parts[1]);
     }
+
+    public static function patch(string $version): string
+    {
+        $parts = explode('.', self::normalize($version));
+        return sprintf('%d.%d.%d', $parts[0], $parts[1], $parts[2]);
+    }
 }
