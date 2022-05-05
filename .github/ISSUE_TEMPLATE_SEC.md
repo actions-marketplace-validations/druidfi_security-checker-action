@@ -1,10 +1,10 @@
 ---
 title: Pending security updates!
 assignees:
-  - back-2-95
+  - {{ payload.sender.login }}
 labels:
   - security
 ---
 {{ env.BODY }}
 
-This issue was brought to you by {{ payload.sender.login }}.
+These updates are pending and were found with scanning `composer.lock` and checking for available security updates.
