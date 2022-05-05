@@ -6,6 +6,9 @@ on:
       - '.github/workflows/build.yaml'
       - 'src/**'
       - 'app.Dockerfile'
+      - 'checker'
+      - 'Dockerfile'
+      - 'entrypoint.sh'
 
 name: Build Docker image
 
