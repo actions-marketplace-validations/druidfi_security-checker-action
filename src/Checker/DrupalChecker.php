@@ -1,26 +1,31 @@
 <?php
 
-namespace App\Service;
+namespace App\Checker;
 
 use App\Entity\DrupalRelease;
+use App\Util\Data;
 use App\Util\Version;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
-class DrupalService
+class DrupalChecker implements CheckerInterface
 {
-    private string $drupalCoreDataUrl = 'https://updates.drupal.org/release-history/%s/current';
+    public static string $corePackageName = 'drupal/core';
 
-    public function getUpdates(array $installed): array
+    private string $projectReleaseHistoryUrl = 'https://updates.drupal.org/release-history/%s/current';
+
+    private array $ignoredPackages = [
+        'drupal/core-composer-scaffold',
+        'drupal/core-dev',
+        'drupal/core-dev-pinned',
+        'drupal/core-recommended',
+        'drupal/core-project-message',
+    ];
+
+    public function check(array &$installed): void
     {
         foreach ($installed as $package_name => $data) {
-            if (str_starts_with($package_name, 'drupal/') && !str_starts_with($package_name, 'drupal/core-')) {
-                if ($package_name === 'drupal/core') {
-                    $project = 'drupal';
-                } else {
-                    $project = substr($package_name, 7);
-                }
-
-                $releases = $this->getData($project);
+            if (str_starts_with($package_name, 'drupal/') && !in_array($package_name, $this->ignoredPackages)) {
+                $project = ($package_name === self::$corePackageName) ? 'drupal' : substr($package_name, 7);
+                $releases = $this->getProjectData($project);
 
                 foreach ($releases as $release) {
                     if (Version::isNew($release['version'], $data['current_version'], '>')) {
@@ -29,19 +34,23 @@ class DrupalService
                             //$installed[$package_name]['updates'][] = $release;
                             $installed[$package_name]['update_to'] = Version::patch($release['version']);
                             $installed[$package_name]['read_more'] = $release['url'];
-                }
+                        }
                     }
                 }
             }
         }
-
-        return $installed;
     }
 
-    private function getData(string $project = 'drupal'): array
+    /**
+     * Get project data from drupal.org.
+     *
+     * @param string $project
+     * @return array
+     */
+    private function getProjectData(string $project): array
     {
-        $url = sprintf($this->drupalCoreDataUrl, $project);
-        $xmlData = (new XmlEncoder())->decode(file_get_contents($url), 'xml');
+        $url = sprintf($this->projectReleaseHistoryUrl, $project);
+        $xmlData = Data::fromXML(file_get_contents($url));
         $data = [];
 
         if (isset($xmlData['releases']['release'])) {
