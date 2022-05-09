@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Checker\DrupalChecker;
 use App\Checker\PhpChecker;
+use App\Entity\Package;
+use App\List\PackageList;
 use App\Traits\LockFileAwareTrait;
 use App\Util\Data;
 
@@ -11,49 +13,52 @@ class UpdateService
 {
     use LockFileAwareTrait;
 
-    private array $installed;
+    private array $checkers = [
+        DrupalChecker::class,
+        PhpChecker::class,
+    ];
 
-    public function checkUpdates(): array
+    public function checkUpdates(): PackageList
     {
-        $this->readInstalledPackages();
+        $packages = $this->readInstalledPackages();
 
-        if ($this->hasPackage(DrupalChecker::$corePackageName)) {
-            (new DrupalChecker)->check($this->installed);
-        }
-
-        (new PhpChecker)->setLockFile($this->getLockFile())->check($this->installed);
-
-        return $this->availableUpdates();
-    }
-
-    private function availableUpdates(): array
-    {
-        foreach ($this->installed as $package => $data) {
-            if (!array_key_exists('update_to', $data)) {
-                unset($this->installed[$package]);
+        foreach ($this->checkers as $checker) {
+            if ($checker::shouldCheck($packages)) {
+                $packages = (new $checker)->setLockFile($this->getLockFile())->check($packages);
             }
         }
 
-        return $this->installed;
+        return $this->availableUpdates($packages);
     }
 
-    private function readInstalledPackages(bool $include_dev = true): void
+    private function availableUpdates(PackageList $packages): PackageList
     {
+        $available = new PackageList();
+
+        foreach ($packages as $package) {
+            if ($package->hasUpdate()) {
+                $available->add($package);
+            }
+        }
+
+        return $available;
+    }
+
+    private function readInstalledPackages(bool $include_dev = false): PackageList
+    {
+        $installed = new PackageList();
         $data = Data::fromJSON(file_get_contents($this->lockFile));
 
-        foreach ($data['packages'] as $package) {
-            $this->installed[$package['name']]['current_version'] = $package['version'];
+        foreach ($data['packages'] as $package_data) {
+            $installed->add(new Package($package_data));
         }
 
         if ($include_dev) {
-            foreach ($data['packages-dev'] as $package) {
-                $this->installed[$package['name']]['current_version'] = $package['version'];
+            foreach ($data['packages-dev'] as $package_data) {
+                $installed->add(new Package($package_data));
             }
         }
-    }
 
-    private function hasPackage(string $package_name): bool
-    {
-        return isset($this->installed[$package_name]);
+        return $installed;
     }
 }

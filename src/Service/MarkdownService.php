@@ -2,20 +2,22 @@
 
 namespace App\Service;
 
+use App\List\PackageList;
+
 class MarkdownService
 {
-    public static function render(array $updates): string
+    public static function render(PackageList $updates): string
     {
         $hasDrupal = false;
         $markdown = "## Security updates available\n\n";
 
-        foreach ($updates as $package_name => $data) {
+        foreach ($updates as $package_name => $package) {
             $markdown .= sprintf(
                 "- `%s` from %s to [%s](%s)\n",
                 $package_name,
-                $data['current_version'],
-                $data['update_to'],
-                $data['read_more']
+                $package->getVersion(),
+                $package->getUpdateVersion(),
+                $package->getUpdateUrl()
             );
 
             if ($package_name === 'drupal/core') {

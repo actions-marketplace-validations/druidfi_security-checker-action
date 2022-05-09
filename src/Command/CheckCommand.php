@@ -52,7 +52,7 @@ class CheckCommand extends Command
             $content = match ($input->getOption('format')) {
                 'json' => (new JsonEncoder())->encode($updates, JsonEncoder::FORMAT),
                 'yaml' => (new YamlEncoder())->encode($updates, YamlEncoder::FORMAT),
-                'print_r' => print_r($updates, true),
+                'print_r' => print_r($updates->toArray(), true),
                 'markdown' => MarkdownService::render($updates),
             };
 
