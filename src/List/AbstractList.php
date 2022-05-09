@@ -8,7 +8,7 @@ use Iterator;
 
 abstract class AbstractList implements ArrayAccess, Iterator, Countable
 {
-    protected array $data;
+    protected array $data = [];
 
     public function offsetExists(mixed $offset): bool
     {

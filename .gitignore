@@ -1,3 +1,3 @@
 /.idea/
-/tests/repo/vendor/
+/tests/*/vendor/
 /vendor/

@@ -15,6 +15,11 @@ test: FORMAT := markdown
 test:
 	./checker --lock=./tests/repo/composer.lock --format=$(FORMAT)
 
+PHONY += test-no-updates
+test-no-updates: FORMAT := markdown
+test-no-updates:
+	./checker --lock=./tests/repo_no_updates/composer.lock --format=$(FORMAT)
+
 PHONY += test-docker
 test-docker: FORMAT := print_r
 test-docker: build-docker-image

@@ -8,6 +8,12 @@ class MarkdownService
 {
     public static function render(PackageList $updates): string
     {
+        $hasUpdates = $updates->count();
+
+        if ($hasUpdates === 0) {
+            return 'No updates available.';
+        }
+
         $hasDrupal = false;
         $markdown = "## Security updates available\n\n";
 
