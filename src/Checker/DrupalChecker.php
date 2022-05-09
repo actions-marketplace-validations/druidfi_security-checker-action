@@ -12,8 +12,8 @@ class DrupalChecker implements CheckerInterface
 {
     use LockFileAwareTrait;
 
-    public static string $corePackageName = 'drupal/core';
-
+    private string $coreExtensionsYaml = 'core.extensions.yml';
+    private string $corePackageName = 'drupal/core';
     private string $projectReleaseHistoryUrl = 'https://updates.drupal.org/release-history/%s/current';
 
     private array $ignoredPackages = [
@@ -24,23 +24,22 @@ class DrupalChecker implements CheckerInterface
         'drupal/core-project-message',
     ];
 
-    public static function shouldCheck(PackageList $packages): bool
+    public function shouldCheck(PackageList $packages): bool
     {
-        return $packages->hasPackage(self::$corePackageName);
+        return $packages->hasPackage($this->corePackageName);
     }
 
     public function check(PackageList $packages): PackageList
     {
         foreach ($packages as $package_name => $package) {
-            if (str_starts_with($package_name, 'drupal/') && !in_array($package_name, $this->ignoredPackages)) {
-                $project = ($package_name === self::$corePackageName) ? 'drupal' : substr($package_name, 7);
+            if ($package->startsWith('drupal/') && !in_array($package_name, $this->ignoredPackages)) {
+                $project = ($package_name === $this->corePackageName) ? 'drupal' : substr($package_name, 7);
                 $releases = $this->getProjectData($project);
 
                 foreach ($releases as $release) {
                     if (Version::isNew($release['version'], $package->getVersion(), '>')) {
                         // Only the latest security update is marked as such in data from drupal.org
                         if ($release['security_update']) {
-                            //$installed[$package_name]['updates'][] = $release;
                             $package->setHasUpdate(true);
                             $package->setUpdateVersion(Version::patch($release['version']));
                             $package->setUpdateUrl($release['url']);

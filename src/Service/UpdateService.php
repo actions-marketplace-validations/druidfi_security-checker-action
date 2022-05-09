@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Checker\CheckerInterface;
 use App\Checker\DrupalChecker;
 use App\Checker\PhpChecker;
 use App\Entity\Package;
@@ -23,8 +24,11 @@ class UpdateService
         $packages = $this->readInstalledPackages();
 
         foreach ($this->checkers as $checker) {
-            if ($checker::shouldCheck($packages)) {
-                $packages = (new $checker)->setLockFile($this->getLockFile())->check($packages);
+            /** @var CheckerInterface $checker */
+            $checker = (new $checker())->setLockFile($this->getLockFile());
+
+            if ($checker->shouldCheck($packages)) {
+                $packages = $checker->check($packages);
             }
         }
 

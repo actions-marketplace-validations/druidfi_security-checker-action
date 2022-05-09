@@ -12,7 +12,7 @@ class PhpChecker implements CheckerInterface
 {
     use LockFileAwareTrait;
 
-    public static function shouldCheck(PackageList $packages): bool
+    public function shouldCheck(PackageList $packages): bool
     {
         return true;
     }

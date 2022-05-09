@@ -61,4 +61,9 @@ class Package
     {
         return $this->updateUrl;
     }
+
+    public function startsWith(string $prefix): bool
+    {
+        return str_starts_with($this->getName(), $prefix);
+    }
 }
