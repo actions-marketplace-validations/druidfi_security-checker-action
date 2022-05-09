@@ -40,3 +40,10 @@ jobs:
           lock: tests/repo/composer.lock
           format: json
         id: security-updates-v1
+
+      - name: Extract a value from JSON
+        run: echo "::set-output name=test::${{ steps.security-updates-v1.outputs.updates }} | jq '.["drupal/core"].update_to'"
+        id: value-from-json
+
+      - name: Check if JSON has correct data
+        if: steps.value-from-json.outputs.test == '9.3.12'

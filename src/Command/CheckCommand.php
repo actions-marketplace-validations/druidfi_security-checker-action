@@ -50,8 +50,8 @@ class CheckCommand extends Command
             $updates = $updateService->checkUpdates();
 
             $content = match ($input->getOption('format')) {
-                'json' => (new JsonEncoder())->encode($updates, JsonEncoder::FORMAT),
-                'yaml' => (new YamlEncoder())->encode($updates, YamlEncoder::FORMAT),
+                'json' => (new JsonEncoder())->encode($updates->toArray(), JsonEncoder::FORMAT),
+                'yaml' => (new YamlEncoder())->encode($updates->toArray(), YamlEncoder::FORMAT),
                 'print_r' => print_r($updates->toArray(), true),
                 'markdown' => MarkdownService::render($updates),
             };
