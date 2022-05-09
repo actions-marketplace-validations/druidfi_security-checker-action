@@ -46,4 +46,5 @@ jobs:
         id: value-from-json
 
       - name: Check if JSON has correct data
-        if: steps.value-from-json.outputs.test == '9.3.12'
+        if: steps.value-from-json.outputs.test != '9.3.12'
+        run: exit 1
