@@ -36,15 +36,15 @@ class CheckCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $lock_file = $input->getOption('lock');
+        $lockFile = $input->getOption('lock');
 
-        if (!file_exists($lock_file)) {
-            $output->writeln(sprintf('<error>Unable to read %s</error>', $lock_file));
+        if (!file_exists($lockFile)) {
+            $output->writeln(sprintf('<error>Unable to read %s</error>', $lockFile));
 
             return Command::FAILURE;
         }
 
-        $updateService = (new UpdateService())->setLockFile($lock_file);
+        $updateService = (new UpdateService())->setLockFile($lockFile);
 
         try {
             $updates = $updateService->checkUpdates();
