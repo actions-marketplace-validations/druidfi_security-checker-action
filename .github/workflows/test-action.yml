@@ -15,15 +15,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        version: [ "v1", "main" ]
-
     steps:
 
       - uses: actions/checkout@v3
 
-      - uses: druidfi/security-checker-action@${{ matrix.version }}
+      - uses: druidfi/security-checker-action@main
+        name: Test main branch
         with:
           lock: tests/repo/composer.lock
           format: markdown
@@ -36,4 +33,10 @@ jobs:
         with:
           update_existing: true
           filename: .github/ISSUE_TEMPLATE_SEC.md
-        if: version == 'main'
+
+      - uses: druidfi/security-checker-action@v1
+        name: Test v1 tag
+        with:
+          lock: tests/repo/composer.lock
+          format: json
+        id: security-updates-v1
