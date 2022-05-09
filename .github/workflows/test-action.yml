@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - uses: druidfi/security-checker-action@${{ matrix.version }}
+      - uses: "druidfi/security-checker-action@${{ matrix.version }}"
         with:
           lock: tests/repo/composer.lock
           format: markdown
