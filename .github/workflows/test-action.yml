@@ -42,7 +42,9 @@ jobs:
         id: security-updates-v1
 
       - name: Extract a value from JSON
-        run: echo "::set-output name=test::${{ steps.security-updates-v1.outputs.updates }} | jq '.["drupal/core"].update_to'"
+        run: |
+          version=$( ${{ steps.security-updates-v1.outputs.updates }} | jq '.["drupal/core"].update_to' )
+          echo "::set-output name=test::$version"
         id: value-from-json
 
       - name: Check if JSON has correct data
