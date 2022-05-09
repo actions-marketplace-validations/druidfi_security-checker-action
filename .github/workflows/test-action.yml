@@ -17,13 +17,13 @@ jobs:
 
     strategy:
       matrix:
-        version: [ v1, main ]
+        version: [ "v1", "main" ]
 
     steps:
 
       - uses: actions/checkout@v3
 
-      - uses: "druidfi/security-checker-action@${{ matrix.version }}"
+      - uses: druidfi/security-checker-action@${{ matrix.version }}
         with:
           lock: tests/repo/composer.lock
           format: markdown
