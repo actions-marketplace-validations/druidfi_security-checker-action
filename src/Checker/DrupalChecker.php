@@ -81,8 +81,10 @@ class DrupalChecker implements CheckerInterface
         $files = new RecursiveIteratorIterator($iterator);
         $coreExtensionYml = false;
 
+        /** @var \SplFileInfo $file */
         foreach ($files as $file) {
-            if ($file->getFilename() === $this->coreExtensionsYaml) {
+            if ($file->getFilename() === $this->coreExtensionsYaml &&
+                !str_contains($file->getRealPath(), 'core/config/install')) {
                 $coreExtensionYml = $file->getRealPath();
                 break;
             }
