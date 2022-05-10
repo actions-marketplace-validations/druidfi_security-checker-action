@@ -6,9 +6,10 @@ use App\Entity\Package;
 
 class PackageList extends AbstractList
 {
-    public function add(Package $package): void
+    public function add(Package $package, ?string $key = null): void
     {
-        $this->offsetSet($package->getName(), $package);
+        $offset = $key ?? $package->getName();
+        $this->offsetSet($offset, $package);
     }
 
     public function remove(Package $package): void
@@ -41,6 +42,7 @@ class PackageList extends AbstractList
                 'current_version' => $package->getVersion(),
                 'update_to' => $package->getUpdateVersion(),
                 'read_more' => $package->getUpdateUrl(),
+                'installed' => $package->isInstalled(),
             ];
         }
 
