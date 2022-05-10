@@ -2,7 +2,9 @@
     "require": {
         "drupal/core-recommended": "9.3.9",
         "dompdf/dompdf": "1.2.0",
-        "drupal/ctools": "3.4"
+        "drupal/ctools": "3.4",
+        "drupal/entity": "^1.3",
+        "drupal/menu_block": "^1.8"
     },
     "require-dev": {
         "drupal/core-dev-pinned": "9.3.9"

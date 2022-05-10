@@ -40,7 +40,7 @@ class UpdateService
         $available = new PackageList();
 
         foreach ($packages as $package) {
-            if ($package->hasUpdate()) {
+            if ($package->hasUpdate() || !$package->isInstalled()) {
                 $available->add($package);
             }
         }

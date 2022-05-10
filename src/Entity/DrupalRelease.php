@@ -4,7 +4,6 @@ namespace App\Entity;
 
 class DrupalRelease
 {
-    private array $data;
     private string $version;
     private string $status;
     private array $terms;
@@ -12,21 +11,20 @@ class DrupalRelease
 
     public function __construct(array $data = [])
     {
-        $this->data = $data;
         $this->version = $data['version'] ?? '';
         $this->status = $data['status'] ?? '';
         $this->terms = $data['terms'] ?? [];
         $this->url = $data['release_link'] ?? '';
     }
 
-    public function toArray(): array
+    public function getVersion(): string
     {
-        return [
-            'version' => $this->version,
-            'security_update' => $this->isSecurityUpdate(),
-            'url' => $this->url,
-            //'data' => $this->data,
-        ];
+        return $this->version;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     public function isStable(): bool
@@ -38,18 +36,7 @@ class DrupalRelease
         return $this->status === 'published';
     }
 
-    private function isInsecure(): bool
-    {
-        foreach ($this->terms as $term) {
-            if (isset($term['value']) && $term['value'] === 'Insecure') {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function isSecurityUpdate(): bool
+    public function isSecurityUpdate(): bool
     {
         foreach ($this->terms as $term) {
             if (isset($term['value']) && $term['value'] === 'Security update') {
