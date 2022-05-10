@@ -47,7 +47,7 @@ jobs:
           echo "::set-output name=test::$version"
         id: value-from-json
 
-      - name: Check if JSON has correct data
+      - name: Fail if JSON has incorrect data
         if: steps.value-from-json.outputs.test != '9.3.12'
         run: |
           echo "::error::JSON does not have correct value: ${{ steps.value-from-json.outputs.test }}"
