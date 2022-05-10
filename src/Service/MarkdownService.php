@@ -54,7 +54,11 @@ class MarkdownService
         }
 
         if (count($markdown_not_installed) > 0) {
-            $markdown .= "\n## Packages not installed\n\n";
+            if (count($markdown_security_updates) > 0) {
+                $markdown .= "\n";
+            }
+
+            $markdown .= "## Modules/themes not installed\n\n";
             $markdown .= join("", $markdown_not_installed);
         }
 
