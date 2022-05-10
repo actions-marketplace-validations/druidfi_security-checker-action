@@ -53,7 +53,7 @@ jobs:
         id: value-from-json
 
       - name: Fail if JSON has incorrect data
-        if: steps.value-from-json.outputs.test != '${{ env.EXPECTED_DRUPAL_UPDATE }}'
+        if: steps.value-from-json.outputs.test != ${{ env.EXPECTED_DRUPAL_UPDATE }}
         run: |
           echo "::error::JSON does not have correct value: ${{ steps.value-from-json.outputs.test }}"
           exit 1
