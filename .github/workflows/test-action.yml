@@ -6,12 +6,17 @@ on:
       - '.github/workflows/test-action.yml'
       - '.github/ISSUE_TEMPLATE_SEC.md'
       - 'tests/**'
+  schedule:
+    - cron:  '0 0 * * *' # UTC == 2 AM EET
 
 name: Test Action
 
 jobs:
 
   test-action:
+
+    env:
+      EXPECTED_DRUPAL_UPDATE: 9.2.18
 
     runs-on: ubuntu-latest
 
@@ -48,7 +53,7 @@ jobs:
         id: value-from-json
 
       - name: Fail if JSON has incorrect data
-        if: steps.value-from-json.outputs.test != '9.3.12'
+        if: steps.value-from-json.outputs.test != '${{ env.EXPECTED_DRUPAL_UPDATE }}'
         run: |
           echo "::error::JSON does not have correct value: ${{ steps.value-from-json.outputs.test }}"
           exit 1

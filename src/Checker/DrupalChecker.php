@@ -43,7 +43,8 @@ class DrupalChecker implements CheckerInterface
         foreach ($projects as $project => $package) {
             /** @var DrupalRelease $release */
             foreach ($this->getProjectData($project) as $release) {
-                if (Version::isNew($release->getVersion(), $package->getVersion())) {
+                // Get only same minor versions
+                if (Version::isNewAndSameMinor($release->getVersion(), $package->getVersion())) {
                     // Only the latest security update is marked as such in data from drupal.org
                     if ($release->isSecurityUpdate()) {
                         $package->setHasUpdate(true);

@@ -13,9 +13,14 @@ class Version
         return Comparator::greaterThan(self::normalize($version), self::normalize($current_version));
     }
 
+    public static function isNewAndSameMinor(string $version, string $current_version): bool|int
+    {
+        return self::isNew($version, $current_version) && self::isSameMinor($version, $current_version);
+    }
+
     public static function isSameMinor(string $version, string $current_version): bool
     {
-        return (new Semver())->satisfies($version, $current_version);
+        return self::minor($version) === self::minor($current_version);
     }
 
     public static function normalize(string $version): string
