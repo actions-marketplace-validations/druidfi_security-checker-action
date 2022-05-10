@@ -7,6 +7,7 @@ class Package
     private string $name;
     private string $version;
     private bool $hasUpdate = false;
+    private bool $isInstalled = true;
     private string $updateVersion;
     private string $updateUrl;
 
@@ -37,6 +38,18 @@ class Package
 
         return $this;
     }
+
+    public function setIsInstalled(bool $isInstalled): self
+    {
+        $this->isInstalled = $isInstalled;
+
+        return $this;
+    }
+
+    public function isInstalled(): bool
+    {
+        return $this->isInstalled;
+    }
     
     public function setUpdateVersion(string $version): self
     {
@@ -47,7 +60,7 @@ class Package
 
     public function getUpdateVersion(): string
     {
-        return $this->updateVersion;
+        return $this->updateVersion ?? '';
     }
 
     public function setUpdateUrl(string $url): self
@@ -59,7 +72,7 @@ class Package
 
     public function getUpdateUrl(): string
     {
-        return $this->updateUrl;
+        return $this->updateUrl ?? '';
     }
 
     public function startsWith(string $prefix): bool
