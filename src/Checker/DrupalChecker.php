@@ -128,10 +128,12 @@ class DrupalChecker implements CheckerInterface
 
         if (isset($xmlData['releases']['release'])) {
             foreach ($xmlData['releases']['release'] as $release) {
-                $release = new DrupalRelease($release);
+                if (is_array($release)) {
+                    $release = new DrupalRelease($release);
 
-                if ($release->isStable()) {
-                    $releases[] = $release;
+                    if ($release->isStable()) {
+                        $releases[] = $release;
+                    }
                 }
             }
         }
