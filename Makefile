@@ -30,4 +30,12 @@ test-gha: FORMAT := markdown
 test-gha: build-gha-image
 	docker run -it --rm -w /workspace -v $(shell pwd)/tests/repo:/workspace $(TAG) /checker --format=$(FORMAT)
 
+PHONY += update-release-v1
+update-release-v1:
+	git tag -d v1
+	git tag v1 main
+	git push --delete origin v1
+	git push --tags
+	gh release edit v1 --draft=false
+
 .PHONY: $(PHONY)
