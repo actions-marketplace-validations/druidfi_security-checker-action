@@ -16,7 +16,7 @@ jobs:
   test-action:
 
     env:
-      EXPECTED_DRUPAL_UPDATE: 9.2.18
+      EXPECTED_DRUPAL_UPDATE: 9.2.20
 
     runs-on: ubuntu-latest
 
