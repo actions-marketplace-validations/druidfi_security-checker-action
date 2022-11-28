@@ -1,6 +1,8 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    "github>druidfi/renovate-config:global",
+    "github>druidfi/renovate-config:symfony"
   ],
   "ignorePaths": [
     "tests/repo"
